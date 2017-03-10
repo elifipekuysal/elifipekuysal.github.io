@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pelican ile GitHub Üzerinde Blog Oluşturma | Elif Ipek Uysal</title>
+  <meta charset="utf-8">
+<meta name="description" content="Merhabalar, Bu yazıda pelican ile github üzerinde nasıl blog oluşturabileceğinizi anlatacağım. Öncelikle kısaca pelican nedir sorusuna bir yanıt verelim. Pelican, veritabanı veya sunucu tarafı mantığı gerektirmeyen, Python ile yazılmış statik bir site oluşturucusudur. Aynı zamanda pelican'ın kaynak kodu GitHub'da barındırılmaktadır. Peki GitHub nedir ve ne için kullanılır? Git + Hub = GitHub …"><meta name="author" content="elifipekuysal">  <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="Cache-Control" content="max-age=604800, must-revalidate" />
+  <link href="/theme/css/screen.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link href="/" type="application/atom+xml" rel="alternate" title="Elif Ipek Uysal ATOM Feed" />
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header-wrapper">
+  <div class="logo"><a href="">Elif Ipek Uysal</a></div>
+  <div class="small"></div>
+    <div class="nav">
+    </div>
+    <div class="nav social">
+<ul>
+    <li><a href="https://github.com/elifipekuysal">Github</a></li>
+    <li><a href="https://www.linkedin.com/in/elif-ipek-uysal-006316123?trk=nav_responsive_tab_profile_pic">Linkedin</a></li>
+    <li><a href="https://twitter.com/elifipekuysal">Twitter</a></li>
+</ul>    </div>
+</div>    <div id="main">
+<h2><a href="/pelican-ile-github-uzerinde-blog-olusturma.html">Pelican ile GitHub Üzerinde Blog Oluşturma</a></h2>
+<h5><i class="icon-feather"></i> Sun 11 December 2016
+<i class="icon-bookmarks"></i>
+</h5>
+
+<p>Merhabalar,</p>
+<p>Bu yazıda pelican ile github üzerinde nasıl blog oluşturabileceğinizi anlatacağım. Öncelikle kısaca pelican nedir sorusuna bir yanıt verelim. Pelican, veritabanı veya sunucu tarafı mantığı gerektirmeyen, Python ile yazılmış statik bir site oluşturucusudur. Aynı zamanda pelican'ın kaynak kodu GitHub'da barındırılmaktadır. Peki GitHub nedir ve ne için kullanılır?</p>
+<div class="highlight"><pre>                          Git + Hub = GitHub
+</pre></div>
+
+
+<p>GitHub'daki "Git", Linux'u yaratan kişi olan Linus Trovalds tarafından başlatılan bir açık kaynaklı sürüm kontrol sistemidir. "Sürüm kontrolü" nedir derseniz: Sürüm kontrolü, belirli bir sürüme daha sonra geri ulaşabilmeniz için, bir dosyaya veya dosya grubuna zamanla yapılan değişiklikleri kaydeden bir sistemdir.</p>
+<p>"Hub" ise, GitHub'da çalışmayı daha kolay bir hale getirmek için Git'i sarıp, ek özellik ve komutlarla genişleten bir komut satırı aracıdır.</p>
+<p>Pelican ve GitHub hakkında ufak bir bilgi edindiğimize göre bu dosyaları kuralım.</p>
+<p>GitHub'a <a href="https://github.com/">buradan</a> üye olabilirsiniz. Daha sonra aşağıda gördüğünüz komutları takip ederek GitHub'ı kurabilirsiniz.</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install git git-doc
+<span class="nv">$ </span>git config --global user.name KULLANICIADI
+<span class="nv">$ </span>git config --global user.email KULLANICIADI.EMAIL@örnek.com
+</pre></div>
+
+
+<p>Sisteminize Pelican'ı kurmak için ise:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install Markdown
+<span class="nv">$ </span>pip install typogrify
+<span class="nv">$ </span>pip install pelican
+</pre></div>
+
+
+<p>Pelican, kurduğunuz şekliyle reStructuredText'i destekler. Ben bu anlatımda tercihen yazılarımı markdown formatında oluşturacağım için, Markdown dosyasını da makineme kurdum.</p>
+<p>Blogunuz için ayrı bir dizin oluşturmanızı tavsiye ederim. Aksi taktirde çalışacağınız alan karışabilir. Artık sitemizi oluşturmaya başlayabiliriz:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pelican-quickstart
+</pre></div>
+
+
+<p>Bu komutu çalıştırdıktan sonra karşınıza çıkan soruları kendinize göre yanıtlayın.</p>
+<p><img alt="" src="../images/pelicangithubblog/1.png"></p>
+<p>"<strong>$ pelican-quickstart</strong>" komutundan sonra, dizininiz şu şekilde bi görünüme sahip olacaktır.</p>
+<p><img alt="" src="../images/pelicangithubblog/2.png"></p>
+<p>Burada bulunan dosyalardan bahsedecek olursak;  </p>
+<blockquote>
+<p><strong>Makefile</strong>, "make" komutununa hangi işlemleri yapması gerektiğini söyler. Örneğin, "make devserver" gibi komutları tanımlar. ( Burada "make devserver" komutu, size ait olan development sunucusunu localhost'ta çalıştırmanızı sağlar. )</p>
+<p><strong>content</strong>, oluşturacağınız tüm Markdown dosyalarınızın bulunması gerektiği dizindir. Pelican, gönderilerinizin bu dizinde olacağını varsayar.Tercihen content'i, yazılarınızı ve bu yazıların içerisinde bulunacak resimleri birbirinden ayıracak şekilde aşağıdaki gibi iki ayrı dizine bölebilirsiniz:<br>
+    $ mkdir content/pages <br>
+    $ mkdir content/images<br>
+  Pelican, oluşturduğumuz bu pages dizininin içinde, blog veya sizi tanıtan, iletişim bilgilerinizi kapsayan yazılarınızın ; images dizininin içinde ise, yazılarınızın içeriğinde bulunan resimlerin olduğunu bilecek şekilde yapılandırılmıştır.</p>
+<p><strong>develop_server.sh</strong> ise, blogunuza yazdığınız yazıların, eklediğiniz resimlerin ve temanızın üzerinde yaptığınız değişikliklerin, GitHub Pages'e tekrar aktarma gerekmeksizin, "localhost:8000" üzerinden görmenizi sağlayan bir bash komut dosyasıdır.</p>
+<p><strong>fabfile.py</strong>, fab komutunu kullanarak sitenizi oluşturmanıza izin veren Fabric için bir yapılandırma dosyasıdır. Bunu kullanmak isterseniz, "$ pip install fabric" komutu ile dosyayı indirmeniz gerekmektedir. Alternatif olarak sadece "make" komutunu da kullanabilirsiniz.</p>
+<p><strong>output</strong>, sunucunuzu çalıştırdığınız zaman content dosyanızın içerisinde bulunan bilgilerin, HTML dosyalarında saklanacağı yerdir.</p>
+<p><strong>pelicanconf.py</strong>, Pelican yapılandırma ayarlarınızı içerir.</p>
+<p><strong>publishconf.py</strong>, Pelican yapılandırma ayarlarını barındırdığı için pelicanconf.py gibidir, ancak onun aksine "$ make devserver" komutu işlem görürken publishconf.py'e başvurulmaz.</p>
+</blockquote>
+<p>Şimdi blog oluşturma kısmına geri dönelim. Blogda yer almasını istediğiniz tüm yazılar ve resimler content (içerik) klasörünüzün içerisinde bulunmalıdır. O zaman hadi dizinimizi content'teki pages klasörüne geçirelim :</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>content/pages
+</pre></div>
+
+
+<p>Benim oluşturduğum dosyanın adı deneme.md ve aşağıdaki gibi bir görünüme sahip :</p>
+<p><img alt="" src="../images/pelicangithubblog/3.png"></p>
+<p>Dosyanızın içinde sadece başlık, tarih ve kategori bilgilerinin bulunması yeterli. Bu bilgilerden sonra gelecek satırda da paylaşmak istediğiniz yazıyı eklemelisiniz. Bu yazının reStructuredText hali ise aşağıdaki gibi olacaktır :</p>
+<p><img alt="" src="../images/pelicangithubblog/4.png"></p>
+<p>Bu işlemlerden sonra projects dizini aşağıdaki gibi bir görünüme sahip olacaktır:
+<img alt="" src="../images/pelicangithubblog/5.png"></p>
+<p>Şimdi projects dizininize geri dönüp, "<strong>$ make devserver</strong>" komutunu kullanarak development sunucusunu başlatın. Komutun çalışması tamamlandıktan sonra eklediğiniz yazıyı veya yazıları, tarayıcınızın URL kısmından "<a href="http://localhost:8000">http://localhost:8000</a>" adresine giderek görebilirsiniz :</p>
+<p><img alt="" src="../images/pelicangithubblog/6.png"></p>
+<p>"<strong>$ make stopserver</strong>" komutuyla ise sunucunuzun çalışmasını durdurabilirsiniz.  </p>
+<p><strong>Pelican Blogu GitHub'a Aktarmak</strong>
+  Blog içeriklerini hazırladıktan sonra, bunları GitHub'a aktarıp herkes tarafından görüntülenebilecek ufak bir platforma dönüştürebilirsiniz. Bunun için ise öncelikle bir GitHub hesabınız olmalı. Eğer GitHub'a üye değilseniz <a href="https://github.com/">bu linke tıklayarak</a> üye olabilirsiniz.</p>
+<p>Hesabınızı oluşturup , ona giriş yapınız.</p>
+<p><img alt="" src="../images/pelicangithubblog/7.png"></p>
+<p>Blogunuz için oluşturduğunuz dosyaları taşıyacak bir repository yani bir depo oluşturmadan önce , hesabınıza SSH (Secure Shell) anahtarı eklemelisiniz. SSH anahtarı, SSH protokolünde kimlik doğrulaması için kullanılan bir şifreleme anahtarıdır. SSH protokolü, güvenli ağ iletişiminin daha basit ve ucuz uygulanması için tasarlanmış bir protokoldür. SSH anahtarları ise, kullanıcı adı ve parola ikilisine benzer bir şekilde erişim izni almanızı sağlar. </p>
+<p>Terminalinize "<strong>ls -al ~/.ssh</strong>" komutunu girerek elinizde bulunan SSH anahtarlarını görebilirsiniz:</p>
+<p><img alt="" src="../images/pelicangithubblog/8.png"></p>
+<p>Public anahtarların dosya isimleri, varsayılan olarak aşağıdakilerden biri olacaktır: </p>
+<blockquote>
+<p>id_dsa.pub<br>
+id_ecdsa.pub<br>
+id_ed25519.pub<br>
+id_rsa.pub  </p>
+</blockquote>
+<p>Eğer public ve private olmak üzere bir anahtar çiftine sahip değilseniz veya yeni bir çift anahtar oluşturmak istiyorsanız;</p>
+<div class="highlight"><pre><span class="nv">$ </span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;KULLANICIADI.EMAIL@örnek.com&quot;</span>
+</pre></div>
+
+
+<p>Bu komut, e-postanızı bir etiket olarak kullanarak sizin için yeni bir ssh anahtarı oluşturur:</p>
+<blockquote>
+<p>$ ssh-keygen -t rsa1 -b 4096 -C "KULLANICIADI.EMAIL@örnek.com"<br>
+Generating public/private rsa key pair.<br>
+Enter file in which to save the key (/home/user/.ssh/rsa): [Entera tıklarsanız public anahtarı belirtilen yere yerleştirir.]<br>
+Enter passphrase (empty for no passphrase): [Public anahtarınız için bir parola oluşturun.]<br>
+Enter same passphrase again: [Parolanızı tekrar girin.]  </p>
+</blockquote>
+<p>Burada, "Enter file in which to save the key (/home/user/.ssh/rsa): " satırında oluşturduğunuz public anahtarın nerede tutulmasını istediğinizi full-path ile gösterebilirsiniz.</p>
+<p>Oluşturduğunuz SSH anahtarı daha sonra ssh-agent denilen hizmete eklemeniz gerekmektedir. Sisteminizde ssh-agent'ın etkinleştirildiğinden emin olun:  </p>
+<blockquote>
+<p>ssh-agent'ı arkaplanda çalıştırın<br>
+$ eval "$(ssh-agent -s)"<br>
+Agent pid 12345  </p>
+</blockquote>
+<p>SSH anahtarınızı , ssh-agent'a ekleyin:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ssh-add ~/.ssh/id_rsa
+</pre></div>
+
+
+<p>Şimdi de ssh anahtarını , github hesabınıza ekleyin:</p>
+<ol>
+<li>GitHub'da sağ üst köşede bulunan profil resminize tıklayıp, ayarlar (settings) seçeneğine gidin.
+  <img alt="" src="../images/pelicangithubblog/9.png"></li>
+<li>Sol tarafta çıkan kullanıcı ayarları çubuğunda "SSH ve GPG anahtarları (SSH and GPG Keys)" kısmını seçtikten sonra karşınıza çıkan sayfanın sağ üstünde bulunan "Yeni SSH Anahtarı (New SSH key)" seçeneğine tıklayın.</li>
+<li>Altta açılan bölümde "Başlık (Title)" kısmına bilgisayarınızı anlatacak bir bilgi girin. "Key (Anahtar)" kısmına ise public anahtarınızın bulunduğu dosyanın çıktısını kopyalayıp-yapıştırın ("<strong>cat id_rsa.pub</strong>"). Ve "SSH Anahtarını Ekle (Add SSH Key)" seçeneğine tıklayın.
+  <img alt="" src="../images/pelicangithubblog/10.png"></li>
+</ol>
+<p>SSH anahtarını hesabınıza eklediğinize göre bir depo (repository) açıp, blogunuz için oluşturduğunuz dosyaları bu depoya ekleyebilirsiniz. Git'te herhangi bir şey yapmak için bir Git deponuz olmalıdır. Kaydettiğiniz verilerin saklandığı yer burasıdır..
+GitHub'ın sayfasında , ekranın sağ üsttarafında bulunan profil resminizin solundaki "<strong>+</strong>" kısmından "<strong>New repository</strong>" seçeneğine tıklayın.</p>
+<p><img alt="" src="../images/pelicangithubblog/11.png"></p>
+<p>Karşınıza çıkan sayfada "Repository" kısmına blogunuza ulaşılmasını istediğiniz başlığı "github.io" eki ile birlikte yazınız.</p>
+<p><img alt="" src="../images/pelicangithubblog/12.png"></p>
+<p>Bir projede biriyle işbirliği yapmanız gerekiyorsa veya kodunuzu tekrar incelemek ve kullanmak istiyorsanız, URL'yi klonlamalısınız (burada klonlamaktan kasıt kopyalamaktır.) . Deponuzu oluşturduktan sonra karşınıza çıkan sayfadan aşağıdaki komut blokunu kopyalayıp terminal üzerinde çalıştırın. Komutun tamamlanması için kullanıcı adınızı ve parolanızı girmelisiniz.</p>
+<p><img alt="" src="../images/pelicangithubblog/13.png"></p>
+<p>Böylece deponuzu, dizininizde bulunan dosyaları eklemek için aktif hale getirmiş oldunuz. Son olarak yapmanız gereken şey "<strong>output</strong>" dizininizin içinde bulunan her şeyi bu depoya aktarmak. Bunun için ilk önce terminalden "<strong>output</strong>" dizininize geçiş yapın ve aşağıdaki komutları kullanarak bu dizinin içindekileri deponuza yerleştirin:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>output
+<span class="nv">$ </span>git add -A
+<span class="nv">$ </span>git commit -m <span class="s2">&quot;commit mesajı&quot;</span>
+<span class="nv">$ </span>git push origin master
+</pre></div>
+
+
+<p>Artık blogunuz başka kişiler tarafından görüntülenmeye açık hale getirilmiş oldu. Blogunuza, deponuzu oluştururken "Repository Name" kısmına yazdığınız adresinden ulaşabilirsiniz.</p>
+<p><img alt="" src="../images/pelicangithubblog/14.png">  </p>
+
+<p align="center"><a href="#">on the top</a></p>
+    </div>
+</div>
+<div id="footer-wrapper">
+<ul class="footer">
+</ul><ul class="footer">
+    <li class="footer">&copy;&nbsp;2014&nbsp;::</li>
+    <li class="footer"><a href="">Elif Ipek Uysal </a>&nbsp;::</li>
+    <li class="footer">powered by <a href="https://github.com/getpelican">pelican</a>&nbsp;::</li>
+    <li class="footer"><a href="http://creativecommons.org/licenses/by-nc/3.0/deed.ru">CC BY-NC</a></li>
+</ul>
+</div></body>
+</html>
