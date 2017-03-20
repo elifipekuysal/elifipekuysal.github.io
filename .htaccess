@@ -1,0 +1,3 @@
+LoadModule php5_module        modules/mod_php55.so
+AddType  application/x-httpd-php         .php
+AddType  application/x-httpd-php-source  .phps
