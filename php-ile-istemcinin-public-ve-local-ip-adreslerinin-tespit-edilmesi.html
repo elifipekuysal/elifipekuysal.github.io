@@ -59,7 +59,7 @@
 &nbsp; PHP'de bunu elde etmek için başvurabileceğiniz iki farklı yol bulunmaktadır. Bu iki yol, değerlerin nasıl ve nereden alındığı konusundaki farkları dışında birbirleriyle aynı işlevi yerine getirirler. Bunlardan ilki olan <strong>getenv()</strong> PHP'deki ortam değişkenleri yardımıyla girilen parametrenin değerini döndürür ve ikincisi olan <strong>$_SERVER</strong> parametrenin değerini web sunucusundan (örneğin Apache) çeker.<br>
 <fieldset>
 &nbsp; <strong>$_SERVER</strong> başlıklar, yollar(path) ve betiklerin yerleri gibi bilgileri içeren bir dizidir ve bir web sunucusu (örneğin, Apache) tarafından oluşturulur. Bu dizideki girdiler HTTP sunucusu tarafından atanır. Kullanımı <strong><em>$_SERVER['parametre']</em></strong> şeklindedir.<br>
-&nbsp; <strong>getenv()</strong> belirtilen bir ortam değişkeninin değerini döndürür. Kullanımı string <strong><em>getenv ('parametre')</em></strong> şeklindedir.<br>
+&nbsp; <strong>getenv()</strong> belirtilen bir ortam değişkeninin değerini döndürür. Kullanımı <strong><em>getenv ('parametre')</em></strong> şeklindedir.<br>
 </fieldset><br>
 &nbsp; Proxy sunucusunu algılamaması, yani direkt local IP adresini çekmesi için, parametrenin olduğu kısma <strong>REMOTE_ADDR</strong> yazmalısınız. <strong>REMOTE_ADDR</strong> geçerli sayfayı görüntüleyen kullanıcının IP adresidir.<br>
 &nbsp; Proxy sunucusunu algılaması, yani public IP adresini elde etmesi için ise <strong>HTTP_FORWARDED_FOR</strong> yazmalısınız. <strong>HTTP_FORWARDED_FOR</strong> proxy sunucusunun IP adresidir.  </p>
