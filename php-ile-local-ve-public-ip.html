@@ -34,7 +34,7 @@
 <p>&nbsp; Bu yazıda "<strong>Bir siteyi ziyaret eden kişinin IP adresini nasıl elde edebiliriz ve bu IP adresini site üzerinde nasıl gösterebiliriz?</strong>" sorusuna yazdığım ufak bir PHP kodu ile cevap vermeye çalışacağım. Öncelikle PHP ile ilgili kısa bir bilgi edinelim.  </p>
 <h3> &nbsp; Nedir bu PHP? </h3>
 
-<p>&nbsp; PHP, 1994 yılında Rasmus Lerdorf tarafından geliştirilmiştir. HTML içine gömülebilen ve <a href="https://www.chip.com.tr/haber/acik-kaynak-kod-nedir-size-de-gerekli-mi_38478.html">açık kaynak</a> kodlu bir <a href="https://tr.wikipedia.org/wiki/Betik_dili">betik dilidir</a>. Sözdiziminin çoğunu C, Java ve Perl'den almış olsa da betiği bu dillerden daha farklı bir yapıdadır. Sunucu tarafında çalıştırılan bir dildir. Yani, içinde PHP kodu barındıran bir siteye bağlanan kullanıcılar buradaki koda erişemez ve müdahale edemezler, yalnızca kodlar sonucu ortaya çıkan görseli görürler.    </p>
+<p>&nbsp; PHP, 1994 yılında Rasmus Lerdorf tarafından geliştirilmiştir. HTML içine gömülebilen ve <a href="https://tr.wikipedia.org/wiki/A%C3%A7%C4%B1k_kaynak">açık kaynak</a> kodlu bir <a href="https://tr.wikipedia.org/wiki/Betik_dili">betik dilidir</a>. Sözdiziminin çoğunu C, Java ve Perl'den almış olsa da betiği bu dillerden daha farklı bir yapıdadır. Sunucu tarafında çalıştırılan bir dildir. Yani, içinde PHP kodu barındıran bir siteye bağlanan kullanıcılar buradaki koda erişemez ve müdahale edemezler, yalnızca kodlar sonucu ortaya çıkan görseli görürler.    </p>
 <p>&nbsp;  PHP kodu başlangıç etiketi olan <strong>&lt;?php</strong> ve bitiş etiketi olan <strong>?&gt;</strong> etiketleri arasına yazılır. Bu etiketler bir HTML dosyasının içinde "PHP kipine" geçişi sağlar. Buna bir örnek verecek olursak;  </p>
 <div class="highlight"><pre><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
 <span class="nt">&lt;html&gt;</span>
@@ -55,7 +55,7 @@
 <p>&nbsp; Burada sayfa yüklenirken <strong>&lt;?php</strong> başlangıç etiketi görüldüğü anda PHP kipine geçiş yapılır ve <strong>?&gt;</strong> bitiş etiketini okuyana kadar gördüğü tüm kodları PHP kodu olarak ele alır. Sonuç olarak bu kod ekrana "Merhaba, ben bir PHP betiğiyim!" yazısını bastıracaktır.  </p>
 <h3>Peki PHP kullanarak siteyi ziyaret eden kişinin IP adresine nasıl ulaşıyoruz?</h3>
 
-<p>&nbsp; Ziyaretçinin IP adresine ulaşmaya genellikle güvenlik, doğrulama, spamları önleme gibi nedenlerle ihtiyaç duyabiliriz.<br>
+<p>&nbsp; Ziyaretçinin IP adresine ulaşmaya genellikle güvenlik, doğrulama, spamları önleme vs. gibi nedenlerle ihtiyaç duyabiliriz.<br>
 &nbsp; PHP'de bunu elde etmek için başvurabileceğiniz iki farklı yol bulunmaktadır. Bu iki yol, değerlerin nasıl ve nereden alındığı konusundaki farkları dışında birbirleriyle aynı işlevi yerine getirirler. Bunlardan ilki olan <strong>getenv()</strong> PHP'deki ortam değişkenleri yardımıyla girilen parametrenin değerini döndürür ve ikincisi olan <strong>$_SERVER</strong> parametrenin değerini web sunucusundan (örneğin Apache) çeker.<br>
 <fieldset>
 &nbsp; <strong>$_SERVER</strong> başlıklar, yollar(path) ve betiklerin yerleri gibi bilgileri içeren bir dizidir ve bir web sunucusu (örneğin, Apache) tarafından oluşturulur. Bu dizideki girdiler HTTP sunucusu tarafından atanır. Kullanımı <strong><em>$_SERVER['parametre']</em></strong> şeklindedir.<br>
