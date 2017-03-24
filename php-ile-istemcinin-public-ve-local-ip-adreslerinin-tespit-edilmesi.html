@@ -26,11 +26,7 @@
 </ul>    </div>
 </div>    <div id="main">
 <h2><a href="/php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html">PHP ile İstemcinin Public ve Local IP Adreslerinin Tespit Edilmesi</a></h2>
-<<<<<<< HEAD:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <h5><i class="icon-feather"></i> Fri 24 March 2017
-=======
-<h5><i class="icon-feather"></i> Thu 24 March 2017
->>>>>>> b4765844a89fff3cbd2404d6f426f1c76f61d73d:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <i class="icon-bookmarks"></i>
 </h5>
 
@@ -59,16 +55,11 @@
 <p>&nbsp; Burada sayfa yüklenirken <strong>&lt;?php</strong> başlangıç etiketi görüldüğü anda PHP kipine geçiş yapılır ve <strong>?&gt;</strong> bitiş etiketini okuyana kadar gördüğü tüm kodları PHP kodu olarak ele alır. Sonuç olarak bu kod ekrana "Merhaba, ben bir PHP betiğiyim!" yazısını bastıracaktır.  </p>
 <h3>Peki PHP kullanarak siteyi ziyaret eden kişinin IP adresine nasıl ulaşıyoruz?</h3>
 
-<<<<<<< HEAD:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <p>&nbsp; Ziyaretçinin IP adresine ulaşmaya genellikle güvenlik, doğrulama, spamları önleme gibi nedenlerle ihtiyaç duyabiliriz.<br>
 &nbsp; PHP'de bunu elde etmek için başvurabileceğiniz iki farklı yol bulunmaktadır. Bu iki yol, değerlerin nasıl ve nereden alındığı konusundaki farkları dışında birbirleriyle aynı işlevi yerine getirirler. Bunlardan ilki olan <strong>getenv()</strong> PHP'deki ortam değişkenleri yardımıyla girilen parametrenin değerini döndürür ve ikincisi olan <strong>$_SERVER</strong> parametrenin değerini web sunucusundan çeker.<br>
-=======
-<p>&nbsp; Ziyaretçinin IP adresine ulaşmaya genellikle güvenlik, doğrulama, spamları önleme vs. gibi nedenlerle ihtiyaç duyabiliriz.<br>
-&nbsp; PHP'de bunu elde etmek için başvurabileceğiniz iki farklı yol bulunmaktadır. Bu iki yol, değerlerin nasıl ve nereden alındığı konusundaki farkları dışında birbirleriyle aynı işlevi yerine getirirler. Bunlardan ilki olan <strong>getenv()</strong> PHP'deki ortam değişkenleri yardımıyla girilen parametrenin değerini döndürür ve ikincisi olan <strong>$_SERVER</strong> parametrenin değerini web sunucusundan (örneğin Apache) çeker.<br>
->>>>>>> b4765844a89fff3cbd2404d6f426f1c76f61d73d:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <fieldset>
 &nbsp; <strong>$_SERVER</strong> başlıklar, yollar(path) ve betiklerin yerleri gibi bilgileri içeren bir dizidir ve bir web sunucusu (örneğin, Apache) tarafından oluşturulur. Bu dizideki girdiler HTTP sunucusu tarafından atanır. Kullanımı <strong><em>$_SERVER['parametre']</em></strong> şeklindedir.<br>
-&nbsp; <strong>getenv()</strong> belirtilen bir ortam değişkeninin değerini döndürür. Kullanımı <strong><em>getenv ('parametre')</em></strong> şeklindedir.<br>
+&nbsp; <strong>getenv()</strong> belirtilen bir ortam değişkeninin değerini döndürür. Kullanımı string <strong><em>getenv ('parametre')</em></strong> şeklindedir.<br>
 </fieldset><br>
 &nbsp; Proxy sunucusunu algılamaması için parametrenin olduğu kısma <strong>REMOTE_ADDR</strong> yazmalısınız. <strong>REMOTE_ADDR</strong> geçerli sayfayı görüntüleyen kullanıcının IP adresidir.<br>
 &nbsp; Proxy sunucusunu algılaması için ise <strong>HTTP_CLIENT_IP, HTTP_X_FORWARDED_FOR, HTTP_X_FORWARDED, HTTP_FORWARDED_FOR, HTTP_FORWARDED</strong> parametrelerini yazmalısınız. Bunlar, bu proxy sunucusuna bağlanan kullanıcının IP adresini veren parametrelerdir.  </p>
@@ -118,22 +109,13 @@
 </pre></div>
 
 
-<<<<<<< HEAD:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <p>&nbsp; Burada gerçekleşen işlemlerden kısaca bahsedecek olursak, siteye giren ziyaretçinin bir internet servis sağlayıcının atadığı public IP üzerinden girip girmediği kontrol edilecektir.  </p>
 <p>&nbsp; Eğer public IP üzerinden girmişse ortam değişkenleri yardımıyla local ve public IP adreslerinin değerlerini döndürüp, bu değerleri sırasıyla aynı isimli değişkenlere atayacaktır. Burada "$publicip" değişkenine ziyaretçinin public IP adresi atanacağı için değeri değişecek ve "0" olmayacaktır. Buna bağlı olarak altta bulunan "if" koşulu sağlanacağı için ekrana şu çıktıyı verecektir:<br>
-=======
-<p>&nbsp; Burada gerçekleşen işlemlerden kısaca bahsedecek olursak, siteye giren ziyaretçinin bir internet servis sağlayıcının atadığı public IP üzerinden girip girmediği kontrol ediliyor.  </p>
-<p>&nbsp; Eğer public IP üzerinden girmişse ortam değişkenleri yardımıyla local ve public IP adreslerinin değerlerini döndürüp, bu değerleri sırasıyla aynı isimli değişkenlere atıyor. Daha sonrasında ekrana şu çıktıyı veriyor:<br>
->>>>>>> b4765844a89fff3cbd2404d6f426f1c76f61d73d:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <center>
     "Public IP'niz : ..."<br>
     "Local IP'niz : ..." 
 </center>  </p>
-<<<<<<< HEAD:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <p>&nbsp; Eğer public IP üzerinden girmemişse direkt olarak local IP adresini değişkene atayacaktır. Bu durumda "$publicip" değişkeninin değeri "0" olarak kalacak, "if" koşulu sağlanmayacağı için "else"e geçiş yapılacaktır. Buna bağlı olarak ekranda sadece aşağıdaki çıktı görünecektir:<br>
-=======
-<p>&nbsp; Eğer public IP üzerinden girmemişse direkt olarak local IP adresini değişkene atıyor ve şu çıktıyı veriyor:<br>
->>>>>>> b4765844a89fff3cbd2404d6f426f1c76f61d73d:php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html
 <center>
     "Local IP'niz : ..."
 </center><br>
