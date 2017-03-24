@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PHP ile İstemcinin Public ve Local IP Adreslerinin Tespit Edilmesi | Elif İpek Uysal</title>
+  <meta charset="utf-8">
+<meta name="description" content="  Merhabalar,   Bu yazıda "Bir siteyi ziyaret eden kişinin IP adresini nasıl elde edebiliriz ve bu IP adresini site üzerinde nasıl gösterebiliriz?" sorusuna yazdığım ufak bir PHP kodu ile cevap vermeye çalışacağım. Öncelikle PHP ile ilgili kısa bir bilgi edinelim.   Nedir bu PHP?   PHP, 1994 yılında Rasmus Lerdorf tarafından geliştirilmiştir. HTML …"><meta name="author" content="elifipekuysal">  <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="Cache-Control" content="max-age=604800, must-revalidate" />
+  <link href="/theme/css/screen.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link href="/" type="application/atom+xml" rel="alternate" title="Elif İpek Uysal ATOM Feed" />
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header-wrapper">
+  <div class="logo"><a href="https://elifipekuysal.github.io">ELIF IPEK UYSAL</a></div>
+  <div class="small">Merhaba Dünya!</div>
+    <div class="nav">
+  <li><a href="/blogyazilari/">Blog Yazıları</a></li>
+    </div>
+    <div class="nav social">
+<ul>
+    <li><a href="https://github.com/elifipekuysal">Github</a></li>
+    <li><a href="https://www.linkedin.com/in/elif-ipek-uysal-006316123?trk=nav_responsive_tab_profile_pic">Linkedin</a></li>
+    <li><a href="https://twitter.com/elifipekuysal">Twitter</a></li>
+</ul>    </div>
+</div>    <div id="main">
+<h2><a href="/php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html">PHP ile İstemcinin Public ve Local IP Adreslerinin Tespit Edilmesi</a></h2>
+<h5><i class="icon-feather"></i> Fri 24 March 2017
+<i class="icon-bookmarks"></i>
+</h5>
+
+<p>&nbsp; Merhabalar,  </p>
+<p>&nbsp; Bu yazıda "<strong>Bir siteyi ziyaret eden kişinin IP adresini nasıl elde edebiliriz ve bu IP adresini site üzerinde nasıl gösterebiliriz?</strong>" sorusuna yazdığım ufak bir PHP kodu ile cevap vermeye çalışacağım. Öncelikle PHP ile ilgili kısa bir bilgi edinelim.  </p>
+<h3> &nbsp; Nedir bu PHP? </h3>
+
+<p>&nbsp; PHP, 1994 yılında Rasmus Lerdorf tarafından geliştirilmiştir. HTML içine gömülebilen ve <a href="https://tr.wikipedia.org/wiki/A%C3%A7%C4%B1k_kaynak">açık kaynak</a> kodlu bir <a href="https://tr.wikipedia.org/wiki/Betik_dili">betik dilidir</a>. Sözdiziminin çoğunu C, Java ve Perl'den almış olsa da betiği bu dillerden daha farklı bir yapıdadır. Sunucu tarafında çalıştırılan bir dildir. Yani, içinde PHP kodu barındıran bir siteye bağlanan kullanıcılar buradaki koda erişemez ve müdahale edemezler, yalnızca kodlar sonucu ortaya çıkan görseli görürler.    </p>
+<p>&nbsp;  PHP kodu başlangıç etiketi olan <strong>&lt;?php</strong> ve bitiş etiketi olan <strong>?&gt;</strong> etiketleri arasına yazılır. Bu etiketler bir HTML dosyasının içinde "PHP kipine" geçişi sağlar. Buna bir örnek verecek olursak;  </p>
+<div class="highlight"><pre><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        ...Burada bazı HTML kodları bulunuyor...
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="cp">&lt;?php</span> 
+            <span class="k">echo</span> <span class="s2">&quot;Merhaba, ben bir PHP betiğiyim!&quot;</span><span class="p">;</span>
+        <span class="cp">?&gt;</span>
+        ...Burada da HTML kodları bulunuyor...
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p>&nbsp; Burada sayfa yüklenirken <strong>&lt;?php</strong> başlangıç etiketi görüldüğü anda PHP kipine geçiş yapılır ve <strong>?&gt;</strong> bitiş etiketini okuyana kadar gördüğü tüm kodları PHP kodu olarak ele alır. Sonuç olarak bu kod ekrana "Merhaba, ben bir PHP betiğiyim!" yazısını bastıracaktır.  </p>
+<h3>Peki PHP kullanarak siteyi ziyaret eden kişinin IP adresine nasıl ulaşıyoruz?</h3>
+
+<p>&nbsp; Ziyaretçinin IP adresine ulaşmaya genellikle güvenlik, doğrulama, spamları önleme gibi nedenlerle ihtiyaç duyabiliriz.<br>
+&nbsp; PHP'de bunu elde etmek için başvurabileceğiniz iki farklı yol bulunmaktadır. Bu iki yol, değerlerin nasıl ve nereden alındığı konusundaki farkları dışında birbirleriyle aynı işlevi yerine getirirler. Bunlardan ilki olan <strong>getenv()</strong> PHP'deki ortam değişkenleri yardımıyla girilen parametrenin değerini döndürür ve ikincisi olan <strong>$_SERVER</strong> parametrenin değerini web sunucusundan çeker.<br>
+<fieldset>
+&nbsp; <strong>$_SERVER</strong> başlıklar, yollar(path) ve betiklerin yerleri gibi bilgileri içeren bir dizidir ve bir web sunucusu (örneğin, Apache) tarafından oluşturulur. Bu dizideki girdiler HTTP sunucusu tarafından atanır. Kullanımı <strong><em>$_SERVER['parametre']</em></strong> şeklindedir.<br>
+&nbsp; <strong>getenv()</strong> belirtilen bir ortam değişkeninin değerini döndürür. Kullanımı string <strong><em>getenv ('parametre')</em></strong> şeklindedir.<br>
+</fieldset><br>
+&nbsp; Proxy sunucusunu algılamaması için parametrenin olduğu kısma <strong>REMOTE_ADDR</strong> yazmalısınız. <strong>REMOTE_ADDR</strong> geçerli sayfayı görüntüleyen kullanıcının IP adresidir.<br>
+&nbsp; Proxy sunucusunu algılaması için ise <strong>HTTP_CLIENT_IP, HTTP_X_FORWARDED_FOR, HTTP_X_FORWARDED, HTTP_FORWARDED_FOR, HTTP_FORWARDED</strong> parametrelerini yazmalısınız. Bunlar, bu proxy sunucusuna bağlanan kullanıcının IP adresini veren parametrelerdir.  </p>
+<p>&nbsp; Benim yazdığım HTML içine gömülmüş olan örnek PHP kodu şu şekilde:  </p>
+<div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+
+    <span class="nt">&lt;head&gt;</span>
+        ...
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        ...
+        <span class="cp">&lt;?php</span>
+            <span class="nv">$publicip</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_CLIENT_IP&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+                <span class="nv">$publicip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_CLIENT_IP&#39;</span><span class="p">);</span> 
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED_FOR&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+                <span class="nv">$publicip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED_FOR&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+                <span class="nv">$publicip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_X_FORWARDED&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_FORWARDED_FOR&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+                <span class="nv">$publicip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_FORWARDED_FOR&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_FORWARDED&#39;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+                <span class="nv">$publicip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;HTTP_FORWARDED&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nv">$localip</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$publicip</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">echo</span> <span class="s2">&quot;&lt;h3&gt;Public IP&#39;niz : </span><span class="si">$publicip</span><span class="s2"> &lt;/h3&gt;&quot;</span> <span class="p">;</span>
+                <span class="k">echo</span> <span class="s2">&quot;&lt;h3&gt;Local IP&#39;niz : </span><span class="si">$localip</span><span class="s2"> &lt;/h3&gt;&quot;</span> <span class="p">;</span> 
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">echo</span> <span class="s2">&quot;&lt;h3&gt;Local IP&#39;niz : </span><span class="si">$localip</span><span class="s2"> &lt;/h3&gt;&quot;</span> <span class="p">;</span>                    
+            <span class="p">}</span>
+        <span class="cp">?&gt;</span>   
+        ...   
+    <span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p>&nbsp; Burada gerçekleşen işlemlerden kısaca bahsedecek olursak, siteye giren ziyaretçinin bir internet servis sağlayıcının atadığı public IP üzerinden girip girmediği kontrol edilecektir.  </p>
+<p>&nbsp; Eğer public IP üzerinden girmişse ortam değişkenleri yardımıyla local ve public IP adreslerinin değerlerini döndürüp, bu değerleri sırasıyla aynı isimli değişkenlere atayacaktır. Burada "$publicip" değişkenine ziyaretçinin public IP adresi atanacağı için değeri değişecek ve "0" olmayacaktır. Buna bağlı olarak altta bulunan "if" koşulu sağlanacağı için ekrana şu çıktıyı verecektir:<br>
+<center>
+    "Public IP'niz : ..."<br>
+    "Local IP'niz : ..." 
+</center>  </p>
+<p>&nbsp; Eğer public IP üzerinden girmemişse direkt olarak local IP adresini değişkene atayacaktır. Bu durumda "$publicip" değişkeninin değeri "0" olarak kalacak, "if" koşulu sağlanmayacağı için "else"e geçiş yapılacaktır. Buna bağlı olarak ekranda sadece aşağıdaki çıktı görünecektir:<br>
+<center>
+    "Local IP'niz : ..."
+</center><br>
+&nbsp; Sonuç olarak bu şekilde siteyi ziyaret eden kullanıcının IP adresine ulaşmış oluyorsunuz.  </p>
+<p><center>&nbsp; Bu kodun tamamına ulaşmak için <a href="https://github.com/elifipekuysal/My-PHP-Codes/blob/master/publicandlocalip.php">tıklayın!</a></center></p>
+<hr>
+<p><center>
+&nbsp; PHP ile ilgili daha fazla bilgi edinmek isterseniz aşağıdaki kaynaklardan yararlanabilirsiniz:<br>
+<a href="http://php.net/manual/tr/intro-whatis.php">PHP Nedir?</a><br>
+<a href="http://php.net/manual/tr/intro-whatcando.php">PHP Neler Yapabilir?</a><br>
+<a href="http://php.net/manual/tr/history.php">PHP'nin Tarihçesi</a><br>
+<a href="http://php.net/manual/tr/install.php">PHP'nin Kurulumu</a><br>
+<a href="http://php.net/manual/tr/funcref.php">PHP'nin Önemli Özellikleri</a><br>
+<a href="http://php.net/manual/tr/langref.php">PHP Dil Başvuru Kılavuzu</a><br>
+<a href="http://php.net/manual/tr/features.php">PHP Kılavuzu</a><br>
+</center>  </p>
+<hr>
+<p><strong><a href="https://twitter.com/elifipekuysal">Elif İpek Uysal</a></strong><br>
+<em>Yazıya <a href="https://elifipekuysal.github.io/php-ile-istemcinin-public-ve-local-ip-adreslerinin-tespit-edilmesi.html">bu adresten de</a> erişebilirsiniz.</em></p>
+
+<p align="center"><a href="#">on the top</a></p>
+    </div>
+</div>
+<div id="footer-wrapper">
+<ul class="footer">
+</ul><ul class="footer">
+    <li class="footer">&copy;&nbsp;2014&nbsp;::</li>
+    <li class="footer"><a href="https://elifipekuysal.github.io"> ELIF IPEK UYSAL </a>&nbsp;::</li>
+    <li class="footer">powered by <a href="https://github.com/getpelican">pelican</a>&nbsp;::</li>
+    <li class="footer"><a href="http://creativecommons.org/licenses/by-nc/3.0/deed.ru">CC BY-NC</a></li>
+</ul>
+</div></body>
+</html>
